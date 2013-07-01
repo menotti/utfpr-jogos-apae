@@ -1,0 +1,2 @@
+Um prédio tem 5 andares, cada andar tem 2 apartamentos./n Quantos apartamentos têm neste prédio?
+010
