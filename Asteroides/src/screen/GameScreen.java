@@ -24,6 +24,7 @@ import objects.Item;
 import objects.Life;
 import objects.Nave;
 import objects.Shot;
+import com.leapmotion.leap.*;
 
 public class GameScreen extends Screen {
 
@@ -40,6 +41,7 @@ public class GameScreen extends Screen {
     int blinkTimer = 0;
     int shotDelay = 0;
     int incrementDelay = 0;
+    Controller c;
 
     public GameScreen() {
         if (GameWinScreen.clear.isPlaying()) {
@@ -52,7 +54,11 @@ public class GameScreen extends Screen {
         bgGame.setSpeedY(1);
 
         // Criando objetos do jogo
-        nave = new Nave();
+        c = new Controller();
+        c.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
+        c.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+        
+        nave = new Nave(c);
 
 
         asteroids = new Asteroid[Global.asteroids];
@@ -128,6 +134,34 @@ public class GameScreen extends Screen {
             shot = new Shot(nave.getX() + (nave.getWidth() / 2) - 9, nave.getY() - 5, 12);
             new Sound("sounds/shot.wav", false).play();
         }
+        
+        Frame frame = c.frame();
+        
+        GestureList gestures = frame.gestures();
+        for (int i = 0; i < gestures.count(); i++) {
+            Gesture gesture = gestures.get(i);
+            
+            switch (gesture.type()) {
+                case TYPE_SCREEN_TAP:
+                    if (nave.isVisible() && shot == null) {
+                        shot = new Shot(nave.getX() + (nave.getWidth() / 2) - 9, nave.getY() - 5, 12);
+                        new Sound("sounds/shot.wav", false).play();
+                        System.out.println("Tap!");
+                    }
+                    break;
+                case TYPE_KEY_TAP:
+                    if (nave.isVisible() && shot == null) {
+                        shot = new Shot(nave.getX() + (nave.getWidth() / 2) - 9, nave.getY() - 5, 12);
+                        new Sound("sounds/shot.wav", false).play();
+                        System.out.println("Tap!");
+                    }
+                    break;
+                default:
+
+                    break;
+            }
+        }
+        
 
         // Se o tiro nao for nulo, desenha. Caso sai da tela, recebe null
         if (shot != null) {

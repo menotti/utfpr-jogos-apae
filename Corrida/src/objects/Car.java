@@ -14,12 +14,17 @@ import java.awt.Graphics;
 
 import game.Global;
 import java.awt.event.MouseEvent;
+import com.leapmotion.leap.*;
 
 /**
  *
  * @author Luiz
  */
 public class Car extends GameObject {
+    
+    private static final int LEAP_SENS = 500;
+    
+    Controller c;
 
     Sprite car;
 
@@ -51,12 +56,12 @@ public class Car extends GameObject {
         car.setFrameSequence(stoped);        
         this.width = 80;
         this.height = 130;
+        this.c = new Controller();
     }
 
     @Override
     public void update() {
 
-    
     car.setX(x);
     car.setY(y);
     car.setAnimationDelay(20);
@@ -64,6 +69,46 @@ public class Car extends GameObject {
     
     if (car.animationEnded()){
         car.setFrameSequence(stoped);
+    }
+    
+    Frame frame = c.frame();
+    if (!frame.hands().empty()) {
+            // Get the first hand
+            Hand hand = frame.hands().get(0);
+            Vector vel = hand.palmVelocity();
+            
+            if (Global.pista == 1){
+         if (vel.getX() <= -LEAP_SENS){
+                this.x = Global.POSITION_RIGHT_LEVEL1;
+                car.setFrameSequence(left);
+                
+         }
+            if (vel.getX() >= LEAP_SENS){
+                this.x = Global.POSITION_LEFT_LEVEL1;
+                car.setFrameSequence(right);
+            }
+    } else {
+        if (vel.getX() <= -LEAP_SENS){
+            if (this.x == Global.POSITION_MID_LEVEL2){
+                this.x = Global.POSITION_RIGHT_LEVEL2;
+                car.setFrameSequence(left);
+                
+            } else if (this.x == Global.POSITION_LEFT_LEVEL2) {
+                this.x = Global.POSITION_MID_LEVEL2;
+                car.setFrameSequence(left);
+            }
+        }
+
+        if (vel.getX() >= LEAP_SENS){
+            if (this.x == Global.POSITION_RIGHT_LEVEL2){
+                car.setFrameSequence(right);
+                this.x = Global.POSITION_MID_LEVEL2;
+            } else if (this.x == Global.POSITION_MID_LEVEL2) {
+                this.x = Global.POSITION_LEFT_LEVEL2;
+                car.setFrameSequence(right);
+            }
+        }
+    }
     }
         
     if (Global.pista == 1){
