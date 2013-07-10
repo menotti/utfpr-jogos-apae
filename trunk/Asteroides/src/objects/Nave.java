@@ -7,6 +7,7 @@ import framework.Util;
 import framework.audio.Sound;
 import framework.screen.Screen;
 import java.awt.Graphics;
+import com.leapmotion.leap.*;
 
 import game.Global;
 import screen.GameOverScreen;
@@ -26,6 +27,10 @@ public class Nave extends GameObject {
     private int[] left = {1};
     private int[] right = {2};
     private int lastX = 0;
+    private Controller c;
+    
+    private static final int LEAP_SENS = 100;
+    private static final int VELOCIDADE = 100;
 
     /**
      * Contrutor padrão da nave, que já o desenha dado um ponto (x,y)
@@ -33,6 +38,23 @@ public class Nave extends GameObject {
      * @param x Posição inicial x
      * @param y Posição inicial y
      */
+    public Nave(Controller c) {
+        super();
+        this.image = Util.loadImage(Global.IMG_NAVE);
+        this.width = image.getWidth(null) / 3;
+        this.height = image.getHeight(null);
+        this.lastX = x;
+        this.x = Util.centerX(70);
+        this.y = Screen.getHeight() - height - 35;
+        nave = new Sprite(image, 70, height);
+        nave.setFrameSequence(neutral);
+        nave.setY(y);
+        nave.setX(x);
+        this.fire = new Fire(3);
+        fire.setPosition(x + 21, y + height - 6);
+        this.c = c;
+    }
+    
     public Nave() {
         super();
         this.image = Util.loadImage(Global.IMG_NAVE);
@@ -51,8 +73,27 @@ public class Nave extends GameObject {
 
     @Override
     public void update() {
+        
+        Frame frame = c.frame();
+        
+        
         if (visible) {
+            
             x = Mouse.getX();
+            
+            if (!frame.hands().empty()) {
+                Hand hand = frame.hands().get(0);
+                FingerList fingers = hand.fingers();
+                if (!fingers.empty()) {
+                    Vector avgPos = Vector.zero();
+                    for (Finger finger : fingers) {
+                        avgPos = avgPos.plus(finger.tipPosition());
+                    }
+                    avgPos = avgPos.divide(fingers.count());
+                    x = (int)((730/300)*(avgPos.getX() + 150));
+                }
+            }
+            
 
             // Nao deixa a nave sair da tela
             if (x > 730) {
