@@ -1,0 +1,6 @@
+O projeto teve como objetivo desenvolver jogos educacionais e de entretenimento para apoiar o processo de ensino-aprendizagem para alunos da Associação de Pais e Amigos dos Excepcionais (APAE) de Campo Mourão, Paraná. Foram desenvolvidos 6 jogos durante o período de um ano (maio de 2010 à maio de 2011), que serão apresentados a seguir. Estes jogos foram desenvolvidos pelos acadêmicos Luiz Philipe Serrano Alves e Rodrigo Takashi Kuroda, orientado pelo professor Marcos Silvano Orita de Almeida. O projeto foi coordenado pelo professor André Luis Schwerz e foi realizado com o apoio financeiro do PROEXT 2009 - MEC/SESu e em parceria com APAE-CM.
+
+Códigos modificados pelo aluno Guilherme Perego na disciplina Projeto Acadêmico em Computação do Departamento de Computação da Universidade Federal de São Carlos (DC/UFSCar)
+
+<a href='http://www.youtube.com/watch?feature=player_embedded&v=XEQxDI5XlsU' target='_blank'><img src='http://img.youtube.com/vi/XEQxDI5XlsU/0.jpg' width='425' height=344 /></a>
+<a href='http://www.youtube.com/watch?feature=player_embedded&v=8rKvKAmCbQ0' target='_blank'><img src='http://img.youtube.com/vi/8rKvKAmCbQ0/0.jpg' width='425' height=344 /></a>
